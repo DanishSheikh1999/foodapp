@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "430516624154",
+    "project_id": "food-maker-aa853",
+    "storage_bucket": "food-maker-aa853.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430516624154:android:9e53c052eb72ff1840eaa3",
+        "android_client_info": {
+          "package_name": "com.example.foodapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430516624154-af1n3unpugsn9730b32av306brl0vsgr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodapp",
+            "certificate_hash": "b3ed295f1b31b71d5f22ce8b34e4d18f54e45601"
+          }
+        },
+        {
+          "client_id": "430516624154-flddei0c8tj0a8imcn6gvrc5oft41g5j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJU7Z2oiiC6sPZ7CUZCVEJ1Viqc10KeiA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430516624154-flddei0c8tj0a8imcn6gvrc5oft41g5j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

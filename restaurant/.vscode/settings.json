@@ -1,0 +1,12 @@
+{
+  "files.exclude": {
+    "LICENSE": true,
+    "restaurant.iml": true,
+    ".idea": true,
+    ".dart_tool": true,
+    ".metadata": true,
+    "CHANGELOG.md": true,
+    "README.md": true,
+    ".vscode": true
+  }
+}

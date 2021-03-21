@@ -1,0 +1,26 @@
+{
+  "files.exclude": {
+    ".dart_tool": true,
+    ".idea": true,
+   
+    ".packages": true,
+    ".gitignore": true,
+    "foodapp.iml": true,
+    ".flutter-plugins": true,
+    "web": true,
+    ".flutter-plugins-dependencies": true,
+    ".metadata": true,
+    "README.md": true,
+    "ios": true,
+    "integration_test": true,
+   
+    "auth/.dart_tool": true,
+    "auth/.idea": true,
+    "auth/.gitignore": true,
+    "auth/.metadata": true,
+    "auth/auth.iml": true,
+    "auth/CHANGELOG.md": true,
+    "auth/LICENSE": true,
+    "auth/README.md": true
+  }
+}
