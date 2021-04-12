@@ -12,14 +12,19 @@ class AuthCubit extends Cubit<AuthState> {
     this.localStore,
   ) : super(IntialState());
 
-  signin(IAuthService iAuthService) async{
+  signin(IAuthService iAuthService,AuthType type) async{
     _startLoading();
     final result = await iAuthService.signIn();
+    localStore.saveAuthType(type);
     _setResultOfAuthState(result);
       }
-    signout(IAuthService iAuthService)async{
+    signout(IAuthService iAuthService) async {
       _startLoading();
       final token = await localStore.fetch();
+      if(token==null){
+          print("Error fetching the token");
+          emit(ErrorState("Error fetching the token"));}
+      else{
       final result = await iAuthService.signOut(token);
       
       if(result.asValue.value){
@@ -27,7 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
         emit(SignOutSuccesState());
       }
       else
-        emit(ErrorState("Error signing out"));
+        emit(ErrorState("Error signing out"));}
     }
 
     signup(ISignUpService iSignUpService,User user) async{
@@ -39,6 +44,7 @@ class AuthCubit extends Cubit<AuthState> {
         if(result.asError!=null){
           emit(ErrorState(result.asError.error));
           return;}
+          localStore.save(result.asValue.value);
         emit(AuthSuccessState(result.asValue.value));
       }
 

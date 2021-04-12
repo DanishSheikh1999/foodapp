@@ -2,16 +2,22 @@ import 'package:auth/auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
-import 'package:foodapp/models/users.dart';
+
 import 'package:foodapp/customBuilds/customtextformfield.dart';
-import 'package:foodapp/states_management/auth/auth_state.dart';
+import 'package:foodapp/models/users.dart';
+import 'package:foodapp/pages/auth/authPage_adapter.dart';
 import 'package:foodapp/states_management/auth/auth_cubit.dart';
+import 'package:foodapp/states_management/auth/auth_state.dart';
 
 class AuthPage extends StatefulWidget {
   final AuthManger authManger;
   final ISignUpService signUpService;
-
-  const AuthPage( {Key key, this.authManger, this.signUpService}) : super(key: key);
+  final IAuthPageAdatper pageAdatper;
+const AuthPage({
+    this.authManger,
+    this.signUpService,
+    this.pageAdatper,}
+  );
   @override
   _AuthPageState createState() => _AuthPageState();
 }
@@ -22,7 +28,7 @@ class _AuthPageState extends State<AuthPage> {
   String password="";
 
   String name="";
-
+  IAuthService service;
   int hex(String color) {
     return int.parse("FF" + color.toUpperCase(), radix: 16);
   }
@@ -35,48 +41,53 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-            child: Container(
+            child: SingleChildScrollView(
+                          child: Container(
       width: double.infinity,
-      height: double.infinity,
+      
       color: Color(hex("FF121212")),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 100),
-            child: _showLogo(context),
+              padding: EdgeInsets.only(top: 100),
+              child: _showLogo(context),
           ),
           SizedBox(height: 50),
           CubitConsumer<AuthCubit,AuthState>(builder:(_,state){
-            return _buildUI(context);
+              return _buildUI(context);
           },
           listener: (context,state){
 
-            if(state is LoadingState){
-              _showLoader();
-            }
-            else{
-              _hideLoader();
-            if(state is ErrorState){
-              
-              print("ErrorState");
-              print(state.error);
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                 backgroundColor:Theme.of(context).accentColor ,
-                content: Text(
-                  state.error,
-                  style:Theme.of(context).textTheme.caption.copyWith(color:Colors.white,fontSize:16),
-                ),
+              if(state is LoadingState){
+                _showLoader();
+              }
+              else if(state is AuthSuccessState){
+                widget.pageAdatper.onAuthSuccess(context, service);
+              }
+              else{
+                _hideLoader();
+              if(state is ErrorState){
+                
+                print("ErrorState");
+                print(state.error);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                   backgroundColor:Theme.of(context).accentColor ,
+                  content: Text(
+                    state.error,
+                    style:Theme.of(context).textTheme.caption.copyWith(color:Colors.white,fontSize:16),
+                  ),
 
-              ));
-            }}
-            
+                ));
+              }}
+              
           },)
           
         ],
       ),
-    )));
+    ),
+            )));
   }
 
 _showLoader(){
@@ -126,7 +137,8 @@ _hideLoader(){
         ),
       );
 
-  _buildUI(BuildContext context) => Expanded(
+  _buildUI(BuildContext context) => Container(
+    height: 500,
         child: PageView(
           controller: _controller,
           physics: NeverScrollableScrollPhysics(),
@@ -155,8 +167,10 @@ _hideLoader(){
         ),
         RaisedButton(
           onPressed: () async {
+            service = widget.authManger.service(AuthType.email);
+            (service as EmailAuth).credential(email: email, password: password);
             if (_formkey.currentState.validate()) {
-              CubitProvider.of<AuthCubit>(context).signin(widget.authManger.email(email, password));
+              CubitProvider.of<AuthCubit>(context).signin(service,AuthType.email);
             }
           },
           shape:
@@ -185,8 +199,12 @@ _hideLoader(){
         IconButton(icon:Image.asset("assets/Google_logo.png"),
         onPressed:(){
           try{
+
+           
+            service = widget.authManger.service(AuthType.google);
+
              print("inside");
-              CubitProvider.of<AuthCubit>(context).signin(widget.authManger.google);
+              CubitProvider.of<AuthCubit>(context).signin(service,AuthType.google);
            }
            catch(error)
             {
@@ -243,7 +261,7 @@ _signUp(BuildContext context) => Padding(
             ..._emailandpassword(context), SizedBox(height:10),
         Align(
             alignment: Alignment.centerRight,
-            child: FlatButton(
+            child: TextButton(
                 onPressed: () {
 
                 },
@@ -287,8 +305,9 @@ _signUp(BuildContext context) => Padding(
         IconButton(icon:Image.asset("assets/Google_logo.png"),
         onPressed:(){
            try{
+             service =  widget.authManger.service(AuthType.google);
              print("inside");
-              CubitProvider.of<AuthCubit>(context).signin(widget.authManger.google);
+              CubitProvider.of<AuthCubit>(context).signin(service,AuthType.google);
            }
            catch(error)
             {

@@ -19,7 +19,7 @@ class _MenuItemListState extends State<MenuItemList> {
         isThreeLine: false,
         leading: FadeInImage.memoryNetwork(
           placeholder: kTransparentImage,
-          image: "https://picsum.photos/id/292/300",
+          image: widget.items[index].imageUrls[0],
           height: 50,
           width: 50,
           fit: BoxFit.fill,

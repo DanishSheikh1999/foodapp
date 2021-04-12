@@ -9,22 +9,23 @@ import '../domain/menu.dart';
 
 import '../api/restaurant_api_contract.dart';
 import '../domain/restaurant.dart';
-
+import 'package:http/http.dart' as http;
 class RestaurantApi implements IRestaurantApi{
-  final MHttpClient httpClient;
+  
+  final IHttpClient httpClient;
   final String baseUrl;
 
   RestaurantApi(this.httpClient, this.baseUrl);
   @override
   Future<Page> fingRestaurant({int page, String searchTerm,int pageSize}) async {
-      final endpoint = baseUrl + "/restaurant/page=$page&limit=$pageSize&searchTerm=$searchTerm";
+      final endpoint = baseUrl + "/restaurants/search?page=$page&limit=$pageSize&query=$searchTerm";
     final response = await httpClient.get(endpoint);
     return _parseRestauratnsJson(response);
     }
   
     @override
     Future<Restaurant> getRestaurant({String id})async {
-      final endpoint = baseUrl + "/restaurant/$id";
+      final endpoint = baseUrl + "/restaurants/restaurant/$id";
       final response = await httpClient.get(endpoint);
       if(response.status!=HttpStatus.Success) return null;
       final json = jsonDecode(response.data);
@@ -33,7 +34,7 @@ class RestaurantApi implements IRestaurantApi{
   
     @override
     Future<List<Menu>> getRestaurantMenu({String restaurant_id}) async {
-        final endpoint = baseUrl + "/restaurant/menu/$restaurant_id";
+        final endpoint = baseUrl + "/restaurants/restaurant/menu/$restaurant_id";
         final response = await httpClient.get(endpoint);
         print(response.data);
         return _parseRestauratnsMenu(response);
@@ -42,7 +43,9 @@ class RestaurantApi implements IRestaurantApi{
           
             @override
             Future<Page> getAllRestaurants({int page,int pageSize}) async {
-                final endpoint  = baseUrl + "/restaurants/page=$page&limit=$pageSize";
+              
+                final endpoint  = baseUrl + "/restaurants?page=$page&limit=$pageSize";
+                print(endpoint);
                 final response = await httpClient.get(endpoint);
                
                 return _parseRestauratnsJson(response);
@@ -51,7 +54,7 @@ class RestaurantApi implements IRestaurantApi{
                   
                     @override
                     Future<Page> getRestaurantswithLocation({int page, Location location,int pageSize}) async {
-                    final endpoint = baseUrl+"/restaurant/page=$page&limit=$pageSize&longitude=${location.longitude}&lattitude=${location.latitude}";
+                    final endpoint = baseUrl+"/restaurant/location?page=$page&limit=$pageSize&longitude=${location.longitude}&lattitude=${location.latitude}";
                     final response = await httpClient.get(endpoint);
                     return _parseRestauratnsJson(response);
                   }

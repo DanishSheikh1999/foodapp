@@ -92,7 +92,7 @@ class _DisplayMenusState extends State<DisplayMenus>  {
                                               alignment:Alignment.topCenter,
                                               child:  FadeInImage.memoryNetwork(
                                   placeholder: kTransparentImage,
-                                  image: "https://picsum.photos/id/292/300",
+                                  image: widget.restaurant.displayImageUrl,
                                   height: 350,
                                   width: double.infinity,
                                   fit: BoxFit.fill,

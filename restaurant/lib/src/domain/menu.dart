@@ -53,7 +53,7 @@ class MenuItem {
     return MenuItem(
       name: map['name'],
       description: map['description'],
-      imageUrls: map['image_urls'].cast<String>(),
+      imageUrls: map['imageUrls'].cast<String>(),
       unitPrice: map['unitPrice'],
     );
   }
