@@ -1,10 +1,14 @@
+import 'dart:convert';
+
+import 'package:auth/auth.dart';
 import 'package:auth/src/domain/credential.dart';
 import 'package:auth/src/domain/token.dart';
 import 'package:foodapp/cache/IlocalStore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-const String token_key = "CACHED__TOKEN";
+const String token_key = "CACHED__TOKEN_AND_DATA";
+
 const String auth_key = "CACHED__TYPE";
 class LocalStore implements ILocalStore{
   final SharedPreferences sharedPreferences;
@@ -12,21 +16,23 @@ class LocalStore implements ILocalStore{
   LocalStore(this.sharedPreferences);
 
   @override
-  delete(Token token) {
+  delete() {
       this.sharedPreferences.remove(token_key);
     }
   
     @override
     Future<Token> fetch() {
-      String token_string = this.sharedPreferences.getString(token_key);
-      if(token_string!=null) return Future.value(Token(token_string));
+      String data = this.sharedPreferences.getString(token_key);
+      print(data);
+      if(data!=null) return Future.value(Token(Details.fromJson(data).token.value));
 
       return null;
     }
   
     @override
-   Future save(Token token) {
-      return this.sharedPreferences.setString(token_key, token.value);
+   Future save(Details details) {
+     
+      this.sharedPreferences.setString(token_key, jsonEncode(details.toMap()));
 
   }
 

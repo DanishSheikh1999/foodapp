@@ -2,7 +2,6 @@
   "files.exclude": {
     ".dart_tool": true,
     ".idea": true,
-   
     ".packages": true,
     ".gitignore": true,
     "foodapp.iml": true,
@@ -13,7 +12,6 @@
     "README.md": true,
     "ios": true,
     "integration_test": true,
-   
     "auth/.dart_tool": true,
     "auth/.idea": true,
     "auth/.gitignore": true,
@@ -21,6 +19,16 @@
     "auth/auth.iml": true,
     "auth/CHANGELOG.md": true,
     "auth/LICENSE": true,
-    "auth/README.md": true
+    "auth/README.md": true,
+    "cart/.dart_tool": true,
+    "cart/.idea": true,
+    "cart/.gitignore": true,
+    "cart/.metadata": true,
+    "cart/.packages": true,
+    "cart/cart.iml": true,
+    "cart/CHANGELOG.md": true,
+    "cart/pubspec.lock": true,
+    "cart/README.md": true,
+    "cart/LICENSE": true
   }
 }

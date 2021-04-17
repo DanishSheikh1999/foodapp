@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodapp/pages/menus/menuitemlist.dart';
+import 'package:foodapp/states_management/cart/cartCubit.dart';
 import 'package:foodapp/states_management/restaurant/restaurantState.dart';
 import 'package:restaurant/restaurant.dart';
 
@@ -11,10 +12,12 @@ import 'package:transparent_image/transparent_image.dart';
 class DisplayMenus extends StatefulWidget {
   final Restaurant restaurant;
   final RestaurantCubit restaurantCubit;
+  final CartCubit cartCubit;
   const DisplayMenus({
     Key key,
     this.restaurant,
     this.restaurantCubit,
+    this.cartCubit
   }) : super(key: key);
 
 
@@ -158,7 +161,7 @@ class _DisplayMenusState extends State<DisplayMenus>  {
                                    unselectedLabelColor: Colors.black54,
                                    tabs: menus.map<Widget>((e) => Tab(text: e.name)).toList()),
                                    Expanded(
-                                     child:TabBarView(children: menus.map<Widget>((e) => MenuItemList(e.items)).toList(),)
+                                     child:TabBarView(children: menus.map<Widget>((e) => MenuItemList(e.items,widget.cartCubit)).toList(),)
                                    )
                                ],
                              ),

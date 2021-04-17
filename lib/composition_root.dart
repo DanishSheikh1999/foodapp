@@ -1,4 +1,5 @@
 import 'package:auth/auth.dart';
+import 'package:cart/cart.dart';
 import 'package:common/infra/MHttpClient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
@@ -13,6 +14,7 @@ import 'package:foodapp/pages/menus/menu_adapter.dart';
 import 'package:foodapp/pages/restaurant/restaurantListPage.dart';
 import 'package:foodapp/pages/restaurant/restaurant_page_adapter.dart';
 import 'package:foodapp/states_management/auth/auth_cubit.dart';
+import 'package:foodapp/states_management/cart/cartCubit.dart';
 import 'package:foodapp/states_management/restaurant/restaurantCubit.dart';
 import 'package:foodapp/states_management/restaurant/restaurantState.dart';
 import 'package:restaurant/restaurant.dart';
@@ -28,7 +30,7 @@ class CompositionRoot {
   static AuthManger _manager;
   static RestaurantApi api;
   static IAuthApi  authApi;
-  
+  static CartApi cartApi;
   static configure() async  {
     sharedPreferences = await SharedPreferences.getInstance();
     localStore = LocalStore(sharedPreferences);
@@ -38,7 +40,7 @@ class CompositionRoot {
     api = RestaurantApi(secureClient, baseUrl);
     authApi = AuthApi(client, baseUrl);
     _manager= AuthManger(authApi);
-    
+    cartApi = CartApi(secureClient,baseUrl);
   }
 
   static Future<Widget> start() async {
@@ -68,9 +70,10 @@ class CompositionRoot {
     // IRestaurantApi api  = RestaurantApi(mHttpClient, baseUrl);
    
     AuthCubit authCubit = AuthCubit(localStore);
+    CartCubit cartCubit = CartCubit(cartApi);
     RestaurantCubit restaurantCubit = RestaurantCubit(api, defaultPageSize: 5);
-     IMenuAdapter menuAdapter = MenuAdapter(restaurantCubit);
-    IRestaurantPageAdapter pageAdapter = RestaurantPageAdapter(restaurantCubit,menuAdapter,createAuthUI);
+     IMenuAdapter menuAdapter = MenuAdapter(restaurantCubit,cartCubit);
+    IRestaurantPageAdapter pageAdapter = RestaurantPageAdapter(restaurantCubit,cartCubit,menuAdapter,createAuthUI);
    
     return MultiCubitProvider(
       providers: [
@@ -78,7 +81,8 @@ class CompositionRoot {
             create: (BuildContext context) => restaurantCubit),
         CubitProvider<HeaderCubit>(
             create: (BuildContext context) => HeaderCubit()),
-          CubitProvider<AuthCubit>(create: (BuildContext context)=> authCubit)
+          CubitProvider<AuthCubit>(create: (BuildContext context)=> authCubit),
+          
       ],
       child: RestaurantListPage(pageAdapter,menuAdapter,authService),
     );

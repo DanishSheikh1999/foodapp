@@ -1,4 +1,5 @@
 
+import 'package:auth/src/domain/details.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../domain/credential.dart';
@@ -21,7 +22,7 @@ class GoogleAuth implements IAuthService{
     ]
   );
   @override
-  Future<Result<Token>> signIn() async {
+  Future<Result<Details>> signIn() async {
     // TODO: implement signIn
     try{
      currentUser = await _googleSignIn.signIn();
@@ -30,7 +31,7 @@ class GoogleAuth implements IAuthService{
     Credential credential  = Credential(email: currentUser.email, type: AuthType.google,name:currentUser.displayName);
     dynamic result = await iAuthApi.signIn(credential);
     if(result.isError) return result.asError;
-    return Result.value(Token(result.asValue.value));}
+    return Result.value(Details.fromJson(result.asValue.valuer));}
      catch(error){
         print("Error" + error.toString());
         return null;

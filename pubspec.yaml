@@ -29,6 +29,8 @@ dependencies:
     path: ./restaurant
   common:
     path: ./common
+  cart:
+    path: ./cart
   cubit: 
   cupertino_icons: ^1.0.1
   equatable: ^1.2.5

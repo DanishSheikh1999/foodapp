@@ -33,11 +33,13 @@ class Menu {
    }
  
 class MenuItem {
+      String id;
       String name;
       String description;
       List<String> imageUrls;
-      double unitPrice;
+      int unitPrice;
   MenuItem({
+    @required this.id,
     @required this.name,
     @required this.description,
     @required this.imageUrls,
@@ -51,6 +53,7 @@ class MenuItem {
     if (map == null) return null;
   
     return MenuItem(
+      id:map['id'],
       name: map['name'],
       description: map['description'],
       imageUrls: map['imageUrls'].cast<String>(),
@@ -59,4 +62,9 @@ class MenuItem {
   }
 
   factory MenuItem.fromJson(String source) => MenuItem.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'MenuItem(id:$id ,name: $name, description: $description, imageUrls: $imageUrls, unitPrice: $unitPrice)';
+  }
 }

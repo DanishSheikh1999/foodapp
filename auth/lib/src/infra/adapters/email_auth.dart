@@ -1,5 +1,6 @@
 
 import 'package:async/async.dart';
+import 'package:auth/src/domain/details.dart';
 import 'package:flutter/foundation.dart';
 import '../../domain/credential.dart';
 import '../../domain/auth_service_contract.dart';
@@ -25,11 +26,11 @@ class EmailAuth implements IAuthService {
 
 
   @override
-  Future<Result<Token>> signIn() async {
+  Future<Result<Details>> signIn() async {
     assert(_credential!= null);
     dynamic result = await iAuthApi.signIn(_credential);
     if(result.isError) return result.asError;
-    else return Result.value(Token(result.asValue.value));
+    else return Result.value(Details.fromJson(result.asValue.value));
     // TODO: implement signin
     
   }

@@ -1,4 +1,5 @@
 import 'package:auth/src/domain/credential.dart';
+import 'package:auth/src/domain/details.dart';
 import 'package:auth/src/domain/token.dart';
 import 'package:auth/src/infra/api/auth_api.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -18,11 +19,14 @@ void main(){
     test("return true",() async {
       Credential credential = Credential(email: "danish@email.com", type: AuthType.google,name: "Danish");
       var result = await sut.signIn(credential);
-      Token token = Token(result.asValue.value);
-      
+      if(result.isValue){
+        var details =  new Details.fromJson(result.asValue.value);
+        print(details.toString());
       await Future.delayed(Duration(minutes: 1,seconds: 30));
-      var sign = await sut.signOut(token);
-      expect(sign.asValue.value, true);
+      var sign = await sut.signOut(details.token);
+      expect(sign.asValue.value, true);}
+      else
+        print(result.asError.error);
     });
   });
 

@@ -39,8 +39,8 @@ var menus = List.generate(
                     description: faker.lorem.sentence(),
                     imageUrls: [faker.internet.httpsUrl()],
                     unitPrice: faker.randomGenerator
-                        .integer(600, min: 20)
-                        .toDouble()))));
+                        .integer(600, min: 20), id: faker.randomGenerator.integer(15000).toString()
+                        ))));
     all_menus.addAll(menus);
      });
   

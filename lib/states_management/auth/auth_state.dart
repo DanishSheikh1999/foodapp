@@ -18,8 +18,8 @@ class IntialState extends AuthState{
   }
 
   class AuthSuccessState extends AuthState{
-  final Token token;
-  AuthSuccessState(this.token){}
+  final Details details;
+  AuthSuccessState(this.details){}
   @override
   // TODO: implement props
   List<Object> get props => [];

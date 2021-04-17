@@ -56,7 +56,9 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                         Padding(
                           padding: EdgeInsets.only(right: 16),
                           child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                widget.adapter.cart(context);
+                              },
                               icon: Icon(
                                 Icons.shopping_cart,
                                 color: Colors.black54,

@@ -28,7 +28,7 @@ class AuthCubit extends Cubit<AuthState> {
       final result = await iAuthService.signOut(token);
       
       if(result.asValue.value){
-        localStore.delete(token);
+        localStore.delete();
         emit(SignOutSuccesState());
       }
       else
@@ -40,7 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
         final result = await iSignUpService.signUp(user.email, user.password, user.name);
         _setResultOfAuthState(result);
     }
-      void _setResultOfAuthState(Result<Token> result) {
+      void _setResultOfAuthState(Result<Details> result) {
         if(result.asError!=null){
           emit(ErrorState(result.asError.error));
           return;}

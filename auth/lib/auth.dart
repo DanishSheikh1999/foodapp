@@ -9,3 +9,4 @@ export './src/infra/manager/Auth_manager.dart';
 export './src/infra/adapters/email_signUp.dart';
 export './src/domain/credential.dart';
 export './src/infra/adapters/email_auth.dart';
+export './src/domain/details.dart';

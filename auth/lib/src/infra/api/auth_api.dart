@@ -45,7 +45,7 @@ class AuthApi implements IAuthApi {
     dynamic json = jsonDecode(response.body);
 
     return json['authToken'] != null
-        ? Result.value(json["authToken"])
+        ? Result.value(jsonEncode(json))
         : Result.error(json["message"]);
   }
 
