@@ -46,6 +46,14 @@ class OrderPlaceSuccess extends CartState{
   List<Object> get props => throw UnimplementedError();
   
 }
+class OrderCancelState extends CartState{
+  final String message;
+  const OrderCancelState(this.message);
+  @override
+  // TODO: implement props
+  List<Object> get props => [message];
+  
+}
 
 class ErrorState extends CartState{
   final String message;

@@ -156,7 +156,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                           child: Padding(
                         padding: const EdgeInsets.only(right: 20, left: 20, bottom: 70),
                         child: CustomTextFormField(
-                          hint: "Search Restaurants",
+                          hint: "Search Dishes",
                           obscureText: false,
                           backgroundColor: Colors.black54,
                           color: Theme.of(context).accentColor,

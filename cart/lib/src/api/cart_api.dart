@@ -44,8 +44,10 @@ class CartApi implements ICartApi{
   Future<String> placeOrder({Location location}) async {
     final endpoint = baseUrl + "/cart/placeOrder";
     String body  = "";
-    if(location != null)
-      body  = jsonEncode(location);
+    if(location != null){
+      var val = {"longitude":location.longitude,"latitude":location.latitude};
+      body  = jsonEncode(val);
+      print(body);}
     final response = await httpClient.post(endpoint, body);
     if(response.status==HttpStatus.Success)
         return response.data;
@@ -58,6 +60,13 @@ class CartApi implements ICartApi{
       final response = await httpClient.get(endpoint);
       return _parseItems(response);
         }
+
+  @override
+  Future<String> cancelOrder() async {
+   final  endpoint = baseUrl + "/cart/cancelOrder";
+   final response = await httpClient.post(endpoint,"");
+   return response.data;
+  }
       
         
 }

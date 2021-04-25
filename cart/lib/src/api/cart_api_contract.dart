@@ -6,4 +6,5 @@ abstract class ICartApi{
     Future<String> add(String menuItemId,int quantity);
     Future<String> placeOrder({Location location});
     Future<List<CartItems>> findOrder();
+    Future<String> cancelOrder();
 }

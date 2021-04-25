@@ -194,12 +194,22 @@ class _CartPageState extends State<CartPage> {
                                       .subtitle1
                                       .copyWith(color: Colors.black54)),
                               SizedBox(height: 12),
+                              
                             ],
                           ),
                         )
                       ])),
                 );
               }),
+               SizedBox(height: 12),
+              orders.isEmpty
+              ? Container()
+              : ElevatedButton(
+                  onPressed: () async {
+                    await widget.cubit.cancelOrders();
+                  },
+                  child: Text("Cancel Order"),
+                ),
         ],
       );
 }
